@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TaskChipsInput } from "@/components/task-chips-input";
 import { SpinnerGap } from "@phosphor-icons/react";
+import { useLanguage } from "@/lib/i18n";
 
 interface ReportFormProps {
   startDate: string;
@@ -27,6 +28,7 @@ export function ReportForm({
   onTasksChange,
   onSubmit,
 }: ReportFormProps) {
+  const { t } = useLanguage();
   const isValid = startDate && endDate && tasks.length > 0 && endDate >= startDate;
 
   return (
@@ -39,7 +41,7 @@ export function ReportForm({
     >
       <div className="grid grid-cols-2 gap-3">
         <div className="grid gap-1.5">
-          <Label htmlFor="startDate">시작일</Label>
+          <Label htmlFor="startDate">{t.startDate}</Label>
           <Input
             id="startDate"
             type="date"
@@ -48,7 +50,7 @@ export function ReportForm({
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor="endDate">종료일</Label>
+          <Label htmlFor="endDate">{t.endDate}</Label>
           <Input
             id="endDate"
             type="date"
@@ -59,11 +61,11 @@ export function ReportForm({
       </div>
 
       {endDate && startDate && endDate < startDate && (
-        <p className="text-destructive text-sm">종료일은 시작일 이후여야 합니다.</p>
+        <p className="text-destructive text-sm">{t.endDateError}</p>
       )}
 
       <div className="grid gap-1.5">
-        <Label>과제명</Label>
+        <Label>{t.taskLabel}</Label>
         <TaskChipsInput tasks={tasks} onTasksChange={onTasksChange} />
       </div>
 
@@ -71,10 +73,10 @@ export function ReportForm({
         {loading ? (
           <>
             <SpinnerGap className="animate-spin" />
-            생성 중...
+            {t.generating}
           </>
         ) : (
-          "보고서 생성"
+          t.generateReport
         )}
       </Button>
     </form>

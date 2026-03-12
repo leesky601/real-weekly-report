@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useLanguage } from "@/lib/i18n";
 
 interface QuotaWarningDialogProps {
   open: boolean;
@@ -19,17 +20,19 @@ export function QuotaWarningDialog({
   open,
   onClose,
 }: QuotaWarningDialogProps) {
+  const { t } = useLanguage();
+
   return (
     <AlertDialog open={open} onOpenChange={(v) => !v && onClose()}>
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
-          <AlertDialogTitle>API 할당량 소진</AlertDialogTitle>
+          <AlertDialogTitle>{t.quotaTitle}</AlertDialogTitle>
           <AlertDialogDescription>
-            Gemini API 할당량이 소진되었습니다. 잠시 후 다시 시도해주세요.
+            {t.quotaDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={onClose}>확인</AlertDialogAction>
+          <AlertDialogAction onClick={onClose}>{t.confirm}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

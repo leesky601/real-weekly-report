@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/lib/i18n";
 
 interface KeywordSuggestionsProps {
   keywords: string[];
@@ -11,11 +12,13 @@ export function KeywordSuggestions({
   keywords,
   onKeywordClick,
 }: KeywordSuggestionsProps) {
+  const { t } = useLanguage();
+
   if (keywords.length === 0) return null;
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">
-      <span className="text-muted-foreground text-xs">추천 키워드:</span>
+      <span className="text-muted-foreground text-xs">{t.suggestedKeywords}</span>
       {keywords.map((keyword) => (
         <Badge
           key={keyword}

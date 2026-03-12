@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { SignOut } from "@phosphor-icons/react";
 import { useAuth } from "@/lib/auth-context";
+import { useLanguage } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ReportForm } from "@/components/report-form";
 import { ReportResult } from "@/components/report-result";
 import { QuotaWarningDialog } from "@/components/quota-warning-dialog";
+import { LanguageToggle } from "@/components/language-toggle";
 import type { TaskReport, GenerateResponse } from "@/types";
 
 function getDefaultDates() {
@@ -25,6 +27,7 @@ function getDefaultDates() {
 export function ReportPage() {
   const router = useRouter();
   const { accessToken, isReady, logout } = useAuth();
+  const { t } = useLanguage();
 
   const defaults = getDefaultDates();
   const [startDate, setStartDate] = useState(defaults.startDate);
@@ -69,14 +72,14 @@ export function ReportPage() {
       }
 
       if (!res.ok) {
-        throw new Error("보고서 생성에 실패했습니다.");
+        throw new Error(t.generateFailedError);
       }
 
       const data: GenerateResponse = await res.json();
       setReports(data.reports);
       setRawText(data.rawText);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "알 수 없는 오류");
+      setError(e instanceof Error ? e.message : t.unknownError);
     } finally {
       setLoading(false);
     }
@@ -98,16 +101,19 @@ export function ReportPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-4 py-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">real-weekly-report</h1>
-        <Button variant="ghost" size="sm" onClick={handleLogout}>
-          <SignOut />
-          로그아웃
-        </Button>
+        <h1 className="text-2xl font-bold">{t.appName}</h1>
+        <div className="flex items-center gap-1">
+          <LanguageToggle />
+          <Button variant="ghost" size="sm" onClick={handleLogout}>
+            <SignOut />
+            {t.logout}
+          </Button>
+        </div>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>보고서 설정</CardTitle>
+          <CardTitle>{t.reportSettings}</CardTitle>
         </CardHeader>
         <CardContent>
           <ReportForm

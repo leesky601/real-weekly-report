@@ -11,6 +11,7 @@ import {
   CardAction,
 } from "@/components/ui/card";
 import { KeywordSuggestions } from "@/components/keyword-suggestions";
+import { useLanguage } from "@/lib/i18n";
 import type { TaskReport } from "@/types";
 
 interface ReportResultProps {
@@ -24,6 +25,7 @@ export function ReportResult({
   rawText,
   onAddTask,
 }: ReportResultProps) {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -35,17 +37,17 @@ export function ReportResult({
   return (
     <div className="grid gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-medium">생성 결과</h2>
+        <h2 className="text-lg font-medium">{t.results}</h2>
         <Button variant="outline" size="sm" onClick={handleCopy}>
           {copied ? (
             <>
               <Check />
-              복사 완료
+              {t.copied}
             </>
           ) : (
             <>
               <CopySimple />
-              전체 복사
+              {t.copyAll}
             </>
           )}
         </Button>
@@ -53,7 +55,7 @@ export function ReportResult({
 
       {reports.every((r) => !r.matched) && (
         <p className="text-muted-foreground text-sm text-center py-2">
-          선택한 기간에 매칭되는 일정이 없습니다. 과제명이나 기간을 조정해보세요.
+          {t.noMatchMessage}
         </p>
       )}
 
@@ -63,7 +65,7 @@ export function ReportResult({
             <CardTitle>{report.taskName}</CardTitle>
             {!report.matched && (
               <CardAction>
-                <span className="text-muted-foreground text-xs">매칭 실패</span>
+                <span className="text-muted-foreground text-xs">{t.noMatch}</span>
               </CardAction>
             )}
           </CardHeader>

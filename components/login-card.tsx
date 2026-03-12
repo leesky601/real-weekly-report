@@ -11,6 +11,7 @@ import {
   SignIn,
 } from "@phosphor-icons/react";
 import { useAuth } from "@/lib/auth-context";
+import { useLanguage } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,10 +20,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { LanguageToggle } from "@/components/language-toggle";
 
 export function LoginCard() {
   const router = useRouter();
   const { login } = useAuth();
+  const { t } = useLanguage();
   const [error, setError] = useState<string | null>(null);
 
   const googleLogin = useGoogleLogin({
@@ -34,32 +37,33 @@ export function LoginCard() {
     },
     onError: (err) => {
       if (err.error === "access_denied") {
-        setError("로그인이 취소되었습니다.");
+        setError(t.loginCancelledError);
       } else {
-        setError("로그인에 실패했습니다. 다시 시도해주세요.");
+        setError(t.loginFailedError);
       }
     },
     onNonOAuthError: () => {
-      setError("팝업이 차단되었거나 로그인이 취소되었습니다.");
+      setError(t.popupBlockedError);
     },
   });
 
   const steps = [
-    { icon: SignIn, text: "Sign in with Google" },
-    { icon: CalendarCheck, text: "Read your calendar events (read-only)" },
-    { icon: Robot, text: "AI generates your weekly report" },
+    { icon: SignIn, text: t.stepSignIn },
+    { icon: CalendarCheck, text: t.stepReadCalendar },
+    { icon: Robot, text: t.stepAiGenerate },
   ];
 
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center pb-2">
+        <div className="flex justify-end -mt-2 -mr-2">
+          <LanguageToggle />
+        </div>
         <CardTitle className="text-2xl font-bold tracking-tight">
-          real-weekly-report
+          {t.appName}
         </CardTitle>
-        <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-          Automatically generate weekly work reports
-          <br />
-          based on your Google Calendar events.
+        <p className="text-sm text-muted-foreground mt-2 leading-relaxed whitespace-pre-line">
+          {t.loginDescription}
         </p>
       </CardHeader>
 
@@ -79,17 +83,15 @@ export function LoginCard() {
 
         <Button className="w-full gap-2" onClick={() => googleLogin()}>
           <GoogleLogo weight="bold" />
-          Google로 로그인
+          {t.signInWithGoogle}
         </Button>
 
         {error && (
           <p className="text-destructive text-sm text-center">{error}</p>
         )}
 
-        <p className="text-center text-xs text-muted-foreground leading-relaxed">
-          We only request read-only access to your calendar.
-          <br />
-          No data is stored on our servers.
+        <p className="text-center text-xs text-muted-foreground leading-relaxed whitespace-pre-line">
+          {t.readOnlyNotice}
         </p>
       </CardContent>
 
@@ -98,14 +100,14 @@ export function LoginCard() {
           href="/privacy"
           className="underline underline-offset-2 hover:text-foreground"
         >
-          개인정보처리방침
+          {t.privacyPolicy}
         </Link>
         <span>|</span>
         <Link
           href="/terms"
           className="underline underline-offset-2 hover:text-foreground"
         >
-          이용약관
+          {t.termsOfService}
         </Link>
       </CardFooter>
     </Card>

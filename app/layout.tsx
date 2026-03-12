@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "real-weekly-report",
   description:
-    "Google 캘린더 일정을 기반으로 AI가 주간보고를 자동 생성합니다.",
+    "Automatically generate weekly work reports based on your Google Calendar events.",
   verification: {
     google: "4wyb9BlZX6TNK5bu1wI-ecOEc2PLgyOI-wpl4aqBVyk",
   },
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={raleway.variable}>
+    <html lang="en" className={raleway.variable}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

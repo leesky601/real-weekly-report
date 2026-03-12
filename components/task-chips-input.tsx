@@ -4,6 +4,7 @@ import { useState, type KeyboardEvent } from "react";
 import { X } from "@phosphor-icons/react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/lib/i18n";
 
 interface TaskChipsInputProps {
   tasks: string[];
@@ -11,6 +12,7 @@ interface TaskChipsInputProps {
 }
 
 export function TaskChipsInput({ tasks, onTasksChange }: TaskChipsInputProps) {
+  const { t } = useLanguage();
   const [input, setInput] = useState("");
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -49,7 +51,7 @@ export function TaskChipsInput({ tasks, onTasksChange }: TaskChipsInputProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder={tasks.length === 0 ? "과제명 입력 후 Enter" : ""}
+        placeholder={tasks.length === 0 ? t.taskPlaceholder : ""}
         className="h-auto min-w-[120px] flex-1 border-0 p-0 shadow-none focus-visible:ring-0"
       />
     </div>
