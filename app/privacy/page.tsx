@@ -1,78 +1,176 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "개인정보처리방침 - 주간보고 자동 생성",
+  title: "Privacy Policy - real-weekly-report",
 };
 
 export default function PrivacyPage() {
   return (
     <main className="mx-auto max-w-2xl space-y-6 p-4 py-12 text-sm leading-relaxed">
-      <h1 className="text-2xl font-bold">개인정보처리방침</h1>
-      <p className="text-muted-foreground">최종 수정일: 2026년 2월 26일</p>
+      <h1 className="text-2xl font-bold">Privacy Policy</h1>
+      <p className="text-muted-foreground">Last updated: March 12, 2026</p>
 
       <section className="space-y-2">
-        <h2 className="text-lg font-semibold">1. 수집하는 개인정보</h2>
-        <p>본 서비스는 Google 로그인을 통해 다음 정보에 접근합니다:</p>
-        <ul className="list-disc space-y-1 pl-6">
-          <li>Google 계정 기본 프로필 (이름, 이메일)</li>
-          <li>Google Calendar 일정 (읽기 전용)</li>
-        </ul>
-      </section>
-
-      <section className="space-y-2">
-        <h2 className="text-lg font-semibold">2. 개인정보의 이용 목적</h2>
-        <p>수집된 정보는 다음 목적으로만 사용됩니다:</p>
-        <ul className="list-disc space-y-1 pl-6">
-          <li>사용자 인증 및 서비스 접근 제어</li>
-          <li>Google Calendar 일정을 기반으로 주간보고서 자동 생성</li>
-        </ul>
-      </section>
-
-      <section className="space-y-2">
-        <h2 className="text-lg font-semibold">3. 개인정보의 보관 및 저장</h2>
+        <h2 className="text-lg font-semibold">
+          1. Information We Access
+        </h2>
         <p>
-          본 서비스는 별도의 서버에 개인정보를 저장하지 않습니다. Google
-          액세스 토큰은 사용자의 브라우저 세션에만 임시 저장되며, 브라우저를
-          닫거나 로그아웃 시 즉시 삭제됩니다.
+          This service accesses the following information through Google
+          sign-in:
         </p>
-      </section>
-
-      <section className="space-y-2">
-        <h2 className="text-lg font-semibold">4. 제3자 제공</h2>
-        <p>
-          Calendar 일정 데이터는 보고서 생성을 위해 Google Gemini AI API로
-          전송됩니다. 이 외에 어떠한 제3자에게도 개인정보를 제공하지 않습니다.
-        </p>
-      </section>
-
-      <section className="space-y-2">
-        <h2 className="text-lg font-semibold">5. 사용자의 권리</h2>
         <ul className="list-disc space-y-1 pl-6">
-          <li>언제든지 로그아웃하여 서비스 접근을 중단할 수 있습니다.</li>
           <li>
-            Google 계정 설정에서 본 앱의 접근 권한을 철회할 수 있습니다:{" "}
+            Google account basic profile (name, email address)
+          </li>
+          <li>
+            Google Calendar events (read-only access to event title,
+            description, and start/end time)
+          </li>
+        </ul>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">
+          2. How We Use Your Information
+        </h2>
+        <p>The information accessed is used solely for:</p>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>User authentication and service access control</li>
+          <li>
+            Generating weekly work reports based on your Google Calendar
+            events
+          </li>
+        </ul>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">
+          3. Data Sharing, Transfer, and Disclosure
+        </h2>
+        <p>
+          Your Google Calendar event data is shared with{" "}
+          <strong>Google Gemini API</strong> (operated by Google LLC) solely
+          for the purpose of generating your weekly report. The data sent
+          includes event titles, descriptions, and start/end times for the
+          date range you selected.
+        </p>
+        <p>
+          <strong>
+            Other than the Google Gemini API, we do not share, transfer,
+            sell, or disclose your Google user data to any third party.
+          </strong>
+        </p>
+        <p>
+          Your Google user data is not used for advertising, marketing, or
+          any purpose other than providing the weekly report generation
+          service.
+        </p>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">
+          4. Data Storage and Retention
+        </h2>
+        <p>
+          This service does not store any personal information or Google
+          user data on our servers. Specifically:
+        </p>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>
+            Google access tokens are stored only in your browser session
+            storage and are deleted when you close the browser or log out.
+          </li>
+          <li>
+            Calendar event data is processed in-memory during report
+            generation and is discarded immediately after the report is
+            created.
+          </li>
+          <li>
+            Generated reports are displayed in your browser only and are
+            not stored on our servers.
+          </li>
+        </ul>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">
+          5. Data Protection Measures
+        </h2>
+        <p>
+          We implement the following measures to protect your sensitive
+          data:
+        </p>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>
+            <strong>Encryption in transit:</strong> All data transmitted
+            between your browser, our servers, and third-party APIs
+            (Google Calendar API, Google Gemini API) is encrypted using
+            HTTPS/TLS.
+          </li>
+          <li>
+            <strong>No persistent storage:</strong> We do not store your
+            Google user data on any server or database, eliminating the
+            risk of data breaches from stored data.
+          </li>
+          <li>
+            <strong>Minimal data access:</strong> We request only
+            read-only access to calendar events
+            (calendar.events.readonly), the minimum scope required to
+            provide our service.
+          </li>
+          <li>
+            <strong>Session-based authentication:</strong> Access tokens
+            are stored only in browser session storage and are
+            automatically cleared when the session ends.
+          </li>
+        </ul>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">6. Your Rights</h2>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>
+            You can log out at any time to stop the service from accessing
+            your data.
+          </li>
+          <li>
+            You can revoke this app&apos;s access from your Google Account
+            settings:{" "}
             <a
               href="https://myaccount.google.com/permissions"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary underline underline-offset-2"
             >
-              Google 계정 권한 관리
+              Google Account Permissions
             </a>
+          </li>
+          <li>
+            Since we do not store your data, no data deletion request is
+            necessary.
           </li>
         </ul>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-lg font-semibold">6. 문의</h2>
+        <h2 className="text-lg font-semibold">7. Contact</h2>
         <p>
-          개인정보 관련 문의는 서비스 관리자에게 연락해주시기 바랍니다.
+          For privacy-related inquiries, please contact us at:{" "}
+          <a
+            href="mailto:sungjin61.lee@gmail.com"
+            className="text-primary underline underline-offset-2"
+          >
+            sungjin61.lee@gmail.com
+          </a>
         </p>
       </section>
 
       <div className="border-t pt-6">
-        <Link href="/login" className="text-primary underline underline-offset-2">
-          로그인 페이지로 돌아가기
+        <Link
+          href="/"
+          className="text-primary underline underline-offset-2"
+        >
+          Back to Home
         </Link>
       </div>
     </main>
