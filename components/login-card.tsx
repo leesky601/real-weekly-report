@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useGoogleLogin } from "@react-oauth/google";
 import {
   GoogleLogo,
   CalendarCheck,
@@ -21,6 +20,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LanguageToggle } from "@/components/language-toggle";
+
+const GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
+const SCOPE =
+  "openid profile email https://www.googleapis.com/auth/calendar.events.readonly";
 
 export function LoginCard() {
   const router = useRouter();
@@ -49,11 +52,21 @@ export function LoginCard() {
     }
   }, [login, router, t]);
 
-  const googleLogin = useGoogleLogin({
-    scope: "https://www.googleapis.com/auth/calendar.events.readonly",
-    ux_mode: "redirect",
-    redirect_uri: typeof window !== "undefined" ? window.location.origin : "",
-  });
+  function handleLogin() {
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const redirectUri = window.location.origin;
+
+    const params = new URLSearchParams({
+      client_id: clientId!,
+      redirect_uri: redirectUri,
+      response_type: "token",
+      scope: SCOPE,
+      prompt: "select_account",
+      include_granted_scopes: "true",
+    });
+
+    window.location.href = `${GOOGLE_AUTH_URL}?${params.toString()}`;
+  }
 
   const steps = [
     { icon: SignIn, text: t.stepSignIn },
@@ -89,7 +102,7 @@ export function LoginCard() {
 
         <div className="border-t" />
 
-        <Button className="w-full gap-2" onClick={() => googleLogin()}>
+        <Button className="w-full gap-2" onClick={handleLogin}>
           <GoogleLogo weight="bold" />
           {t.signInWithGoogle}
         </Button>
