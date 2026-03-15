@@ -53,7 +53,7 @@ export function LoginCard() {
   }, [login, router, t]);
 
   function handleLogin() {
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim();
     const redirectUri = window.location.origin;
 
     const params = new URLSearchParams({
