@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -28,23 +28,31 @@ export function LoginCard() {
   const { t } = useLanguage();
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const params = new URLSearchParams(hash.substring(1));
+    const accessToken = params.get("access_token");
+    const errorParam = params.get("error");
+
+    if (accessToken) {
+      login(accessToken);
+      window.history.replaceState({}, "", window.location.pathname);
+      router.push("/report");
+    } else if (errorParam === "access_denied") {
+      setError(t.loginCancelledError);
+      window.history.replaceState({}, "", window.location.pathname);
+    } else if (errorParam) {
+      setError(t.loginFailedError);
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }, [login, router, t]);
+
   const googleLogin = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/calendar.events.readonly",
-    onSuccess: (response) => {
-      setError(null);
-      login(response.access_token);
-      router.push("/report");
-    },
-    onError: (err) => {
-      if (err.error === "access_denied") {
-        setError(t.loginCancelledError);
-      } else {
-        setError(t.loginFailedError);
-      }
-    },
-    onNonOAuthError: () => {
-      setError(t.popupBlockedError);
-    },
+    ux_mode: "redirect",
+    redirect_uri: typeof window !== "undefined" ? window.location.origin : "",
   });
 
   const steps = [
